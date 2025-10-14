@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: admin-service
+server:
+  port: 8084
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+alerts:
+  gateway:
+    base-url: ${ALERT_SERVICE_URL:http://localhost:8083}
+    timeout: 5s
+
+admin:
+  auth:
+    session-ttl: PT8H
+    users:
+      - username: admin
+        password: changeme
+        roles:
+          - ANALYST
+          - SUPERVISOR

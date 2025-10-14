@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins: ${ADMIN_UI_ORIGINS:http://localhost:5173}
+            allowed-methods:
+              - GET
+              - POST
+              - PATCH
+              - OPTIONS
+            allowed-headers: "*"
+            allow-credentials: false
+      routes:
+        - id: admin-service
+          uri: ${ADMIN_SERVICE_URL:http://localhost:8084}
+          predicates:
+            - Path=/api/v1/admin/**
+          filters:
+            - StripPrefix=0
+server:
+  port: 8080
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true

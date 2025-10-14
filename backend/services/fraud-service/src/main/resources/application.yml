@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: fraud-service
+  main:
+    web-application-type: reactive
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: fraud-service
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+server:
+  port: 8082
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+kafka:
+  topics:
+    transactions-raw: ${KAFKA_TOPIC_TRANSACTIONS_RAW:transactions.raw}
+    fraud-decisions: ${KAFKA_TOPIC_FRAUD_DECISIONS:fraud.decisions}
+
+fraud:
+  scoring:
+    http:
+      enabled: ${FRAUD_SCORING_HTTP_ENABLED:false}
+      base-url: ${FRAUD_SCORING_HTTP_BASE_URL:http://localhost:9090}
+      timeout: ${FRAUD_SCORING_HTTP_TIMEOUT:2s}

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false">
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+    <springProperty scope="context" name="appName" source="spring.application.name" defaultValue="application" />
+    <springProperty scope="context" name="activeProfiles" source="spring.profiles.active" defaultValue="default" />
+
+    <contextName>${appName}</contextName>
+
+    <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <fieldName>timestamp</fieldName>
+                </timestamp>
+                <version>
+                    <fieldName>v</fieldName>
+                </version>
+                <logLevel>
+                    <fieldName>level</fieldName>
+                </logLevel>
+                <threadName>
+                    <fieldName>thread</fieldName>
+                </threadName>
+                <loggerName>
+                    <fieldName>logger</fieldName>
+                </loggerName>
+                <pattern>
+                    <pattern>
+                        {
+                            "app":"${appName}",
+                            "profiles":"${activeProfiles:-default}",
+                            "trace":"%X{traceId:-}",
+                            "span":"%X{spanId:-}",
+                            "stack_hash":"%mdc{stack_hash}"
+                        }
+                    </pattern>
+                </pattern>
+                <message>
+                    <fieldName>message</fieldName>
+                </message>
+                <arguments />
+                <mdc />
+                <callerData>
+                    <classFieldName>caller_class</classFieldName>
+                    <methodFieldName>caller_method</methodFieldName>
+                    <fileFieldName>caller_file</fileFieldName>
+                    <lineFieldName>caller_line</lineFieldName>
+                </callerData>
+                <stackTrace>
+                    <fieldName>stacktrace</fieldName>
+                </stackTrace>
+            </providers>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="JSON_CONSOLE" />
+    </root>
+</configuration>

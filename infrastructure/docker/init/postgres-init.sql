@@ -1,0 +1,1 @@
+-- Intentionally left blank. Database provisioning handled by postgres-init.sh.
