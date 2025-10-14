@@ -2,37 +2,92 @@
 /build/
 **/build/
 **/out/
+**/target/
+**/bin/
 
 # IDE files
 .idea/
 .vscode/
 *.iml
+*.swp
+*.swo
+*~
 
 # Logs
 *.log
+logs/
 
 # OS files
 .DS_Store
 Thumbs.db
+.directory
 
 # Python
 ml/.venv/
 ml/.mypy_cache/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+.pytest_cache/
+.coverage
+htmlcov/
 
 # Node
 ui/frontend/node_modules/
+ui/frontend/dist/
+ui/frontend/.next/
+ui/frontend/.nuxt/
+*.tsbuildinfo
 
 # Data & models
 ml/data/
 ml/notebooks/.ipynb_checkpoints/
 ml/models/
+*.h5
+*.pkl
+*.joblib
 
 # Gradle
 .gradle/
 **/.gradle/
 !gradle/wrapper/gradle-wrapper.jar
 
-# Environment
+# Maven
+**/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Environment & Secrets
 .env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.crt
+secrets/
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+.terraform.lock.hcl
+
+# Kubernetes
+**/*.kubeconfig
